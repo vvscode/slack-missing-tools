@@ -1,0 +1,23 @@
+{
+  "name": "slack-missing-tools",
+  "version": "0.0.0",
+  "description": "Some missing slack cli-tools (messaging, dumping and so on)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvscode/slack-missing-tools.git"
+  },
+  "keywords": [
+    "slack",
+    "cli"
+  ],
+  "author": "vvscode",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvscode/slack-missing-tools/issues"
+  },
+  "homepage": "https://github.com/vvscode/slack-missing-tools#readme"
+}
