@@ -4,11 +4,22 @@ module.exports = program => {
   program
     .command("dump-users")
     .description("Dump user information")
-    .action(command => {
-      console.log("dump users command", command);
+    .action(async command => {
+      try {
+        console.log("dump users command", command);
 
-      const debug = command.parent.args.debug;
-      const ui = getSlackUI({ debug });
-      ui.doSomething();
+        const { debug, team, username, password } = command.parent;
+
+        const ui = await getSlackUI({ debug });
+        await ui.login({
+          teamName: team,
+          userName: username,
+          password,
+        });
+
+        console.log("Done");
+      } catch (e) {
+        console.error("Something went wrong", e);
+      }
     });
 };
