@@ -19,3 +19,14 @@ This project is just a wrapper around SlackUI (via puppeteer), so I'm going to i
  - [x] Dump users info (to grab emails, check avatars and so on)
  - [ ] Send messages
  - [ ] ...
+
+ ## Options (command line arguments)
+
+Tools has commands and options. There are some global options, requeried by tool itself. And some depends on the command.
+
+Global options are next:
+
+- `--team` - required, team name to deal with (like `react` / `emberjs`)
+- `--username` - required, your username to use
+- `--password` - required, your password to use
+- `--debug` - optional, allows you to disable headless mode for browser and see what happens with your slack (please, do not touch window and controls inside) 
