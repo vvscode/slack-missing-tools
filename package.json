@@ -1,6 +1,6 @@
 {
   "name": "slack-missing-tools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Some missing slack cli-tools (messaging, dumping and so on)",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/vvscode/slack-missing-tools.git"
   },
   "bin": {
-    "slack-missing-tools": "node index.js"
+    "slack-missing-tools": "index.js"
   },
   "keywords": [
     "slack",
