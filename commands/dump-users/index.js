@@ -7,24 +7,20 @@ module.exports = program => {
     .command("dump-users")
     .description("Dump user information")
     .action(async command => {
+      const { debug, team, username, password } = command.parent;
+      console.info(`Dump users for ${team} team`);
       try {
-        console.log("dump users command", command);
-
-        const { debug, team, username, password } = command.parent;
-
         const ui = await getSlackUI({ debug });
 
         const users = [];
         await ui.setResponseInterceptor({
           filter: interceptedResponse => interceptedResponse.url().includes("users/info"),
           action: async interceptedResponse => {
-            console.log("action for url", interceptedResponse.url());
             try {
               let json = await interceptedResponse.json();
               users.push(...json.results);
-              console.log(json);
             } catch (e) {
-              console.log("Not a json");
+              // console.error(`${interceptedResponse.url()} is not a json`);
             }
           },
         });

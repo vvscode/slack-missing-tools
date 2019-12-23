@@ -24,6 +24,8 @@ class SlackPageObject {
   }
 
   async login({ teamName, userName, password }) {
+    console.info("Login...");
+
     const url = `https://${teamName}.slack.com`;
     const sEmail = "#email";
     const sPassword = "#password";
@@ -51,6 +53,8 @@ class SlackPageObject {
   }
 
   async setResponseInterceptor({ filter, action }) {
+    console.info("setResponseInterceptor...");
+
     const page = await this.getPage();
     page.on("response", interceptedResponse => {
       if (filter(interceptedResponse)) {
@@ -60,6 +64,8 @@ class SlackPageObject {
   }
 
   async scanAllExistingUsers() {
+    console.info("scanAllExistingUsers...");
+
     const sList = ".ReactVirtualized__Grid.ReactVirtualized__List";
     const page = await this.getPage();
     await page.click('[aria-label="Open a direct message"]');
@@ -67,7 +73,6 @@ class SlackPageObject {
     for (let i = 0; i < 100; i++) {
       await page.$eval(sList, el => (el.scrollTop += 999));
       await sleep(100);
-      console.log("Scroll");
     }
   }
 }

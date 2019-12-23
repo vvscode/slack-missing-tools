@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/vvscode/slack-missing-tools.git"
   },
+  "bin": {
+    "slack-missing-tools": "./index.js"
+  },
   "keywords": [
     "slack",
     "cli"
