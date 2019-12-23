@@ -1,7 +1,13 @@
+const sleep = require("../utils/sleep");
+
 class SlackPageObject {
   constructor({ browser }) {
     this.browser = browser;
     this.name = "SlackPageObject";
+  }
+
+  die() {
+    this.browser.close();
   }
 
   _waitForAllElements(selectors, visible = true) {
@@ -18,8 +24,6 @@ class SlackPageObject {
   }
 
   async login({ teamName, userName, password }) {
-    console.log("Login", { teamName, userName, password });
-
     const url = `https://${teamName}.slack.com`;
     const sEmail = "#email";
     const sPassword = "#password";
@@ -31,14 +35,39 @@ class SlackPageObject {
     await this._waitForAllElements([sEmail, sPassword, sSignInBtn]);
 
     await page.type(sEmail, userName);
+    await sleep(100);
     await page.type(sPassword, password);
-    await page.click(sSignInBtn);
 
-    try {
-      await page.waitForNavigation({ timeout: 10, waitUntil: "networkidle2" });
-    } catch (e) {
-      const errorMesage = (await page.$eval(".alert_error", el => el.innerText)) || "Some login error";
-      throw errorMesage;
+    await page.click(sSignInBtn);
+    const errorMessage = await page
+      .waitFor(_ => (document.querySelector(".alert_error") || {}).innerText, {
+        timeout: 10 * 1000,
+      })
+      .catch(() => null);
+
+    if (errorMessage) {
+      throw errorMessage;
+    }
+  }
+
+  async setResponseInterceptor({ filter, action }) {
+    const page = await this.getPage();
+    page.on("response", interceptedResponse => {
+      if (filter(interceptedResponse)) {
+        action(interceptedResponse);
+      }
+    });
+  }
+
+  async scanAllExistingUsers() {
+    const sList = ".ReactVirtualized__Grid.ReactVirtualized__List";
+    const page = await this.getPage();
+    await page.click('[aria-label="Open a direct message"]');
+    await this._waitForAllElements([sList]);
+    for (let i = 0; i < 100; i++) {
+      await page.$eval(sList, el => (el.scrollTop += 999));
+      await sleep(100);
+      console.log("Scroll");
     }
   }
 }
