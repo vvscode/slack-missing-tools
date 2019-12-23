@@ -36,9 +36,13 @@ class SlackPageObject {
 
     await this._waitForAllElements([sEmail, sPassword, sSignInBtn]);
 
-    await page.type(sEmail, userName);
+    await page.click(sEmail);
     await sleep(100);
-    await page.type(sPassword, password);
+    await page.type(sEmail, userName, { delay: 100 });
+    await sleep(100);
+    await page.click(sPassword);
+    await sleep(100);
+    await page.type(sPassword, password, { delay: 100 });
 
     await page.click(sSignInBtn);
     const errorMessage = await page
