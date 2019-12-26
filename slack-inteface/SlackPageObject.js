@@ -80,6 +80,36 @@ class SlackPageObject {
       await sleep(100);
     }
   }
+
+  async jumpTo(target) {
+    console.info(`jump to ${target}`);
+
+    const sAutocomplete = '[aria-owns="c-search_autocomplete__suggestion_list"]';
+    const sJumper = ".p-channel_sidebar__jumper";
+    const sFistItem = ".c-search_autocomplete__suggestion_list li span";
+    const page = await this.getPage();
+
+    await page.click(sJumper);
+    await this._waitForAllElements([sAutocomplete]);
+    await page.type(sAutocomplete, target, { delay: 100 });
+    await this._waitForAllElements([sFistItem]);
+    await page.click(sFistItem);
+    await sleep(200);
+  }
+
+  async sendMessage(message) {
+    console.info(`send "${message}"`);
+
+    const page = await this.getPage();
+
+    const sTextarea = ".ql-editor";
+    await this._waitForAllElements([sTextarea]);
+    await page.type(sTextarea, message, { delay: 100 });
+
+    // For unknown reason just `Enter` on next line doesn't work
+    // https://stackoverflow.com/questions/46442253/pressing-enter-button-in-puppeteer
+    await (await page.$(sTextarea)).press("NumpadEnter");
+  }
 }
 
 module.exports = {

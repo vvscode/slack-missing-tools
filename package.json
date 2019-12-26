@@ -1,6 +1,6 @@
 {
   "name": "slack-missing-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Some missing slack cli-tools (messaging, dumping and so on)",
   "main": "index.js",
   "scripts": {

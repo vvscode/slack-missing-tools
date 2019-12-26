@@ -17,7 +17,7 @@ This project is just a wrapper around SlackUI (via puppeteer), so I'm going to i
 ## Plan
 
  - [x] Dump users info (to grab emails, check avatars and so on)
- - [ ] Send messages
+ - [x] Send messages
  - [ ] ...
 
  ## Options (command line arguments)
@@ -26,6 +26,7 @@ Tools has commands and options. There are some global options, requeried by tool
 
 Global options are next:
 
+- `--help` - to see available commands
 - `--team` - required, team name to deal with (like `react` / `emberjs`)
 - `--username` - required, your username to use
 - `--password` - required, your password to use
