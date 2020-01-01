@@ -1,5 +1,7 @@
 # Missing slack tools
 
+[![NPM](https://nodei.co/npm/slack-missing-tools.png)](https://nodei.co/npm/slack-missing-tools/)
+
 ## How to start:
 
 ```bash
