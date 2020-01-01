@@ -26,6 +26,7 @@
   "dependencies": {
     "commander": "^4.0.1",
     "glob": "^7.1.6",
+    "log": "^6.0.0",
     "puppeteer": "^2.0.0"
   },
   "devDependencies": {

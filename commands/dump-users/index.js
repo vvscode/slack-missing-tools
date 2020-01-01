@@ -1,14 +1,15 @@
 const fs = require("fs");
 
 const getSlackUI = require("../../slack-inteface");
+const log = require("../../utils/log").get("dump-users");
 
 module.exports = program => {
   program
     .command("dump-users")
-    .description("Dump user information")
+    .description("Dump users information")
     .action(async command => {
       const { debug, team, username, password } = command.parent;
-      console.info(`Dump users for ${team} team`);
+      log.info(`Dump users for ${team} team`);
       try {
         const ui = await getSlackUI({ debug });
 
@@ -20,7 +21,7 @@ module.exports = program => {
               let json = await interceptedResponse.json();
               users.push(...json.results);
             } catch (e) {
-              // console.error(`${interceptedResponse.url()} is not a json`);
+              log.error(`${interceptedResponse.url()} is not a json`);
             }
           },
         });
@@ -36,9 +37,9 @@ module.exports = program => {
         fs.writeFileSync(`${team}_users.json`, JSON.stringify(users, null, 2));
 
         await ui.die();
-        console.log("Done");
+        log.notice("Done");
       } catch (e) {
-        console.error("Something went wrong", e);
+        log.error("Something went wrong", e);
       }
     });
 };

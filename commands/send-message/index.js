@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 const getSlackUI = require("../../slack-inteface");
+const log = require("../../utils/log").get("send-message");
 
 module.exports = program => {
   program
@@ -11,7 +12,7 @@ module.exports = program => {
     .action(async command => {
       const { target, message } = command;
       const { debug, team, username, password } = command.parent;
-      console.info(`Send "${message}" to "${target}"`);
+      log.info(`Send "${message}" to "${target}"`);
       try {
         const ui = await getSlackUI({ debug });
 
@@ -25,9 +26,9 @@ module.exports = program => {
         await ui.sendMessage(message);
 
         await ui.die();
-        console.log("Done");
+        log.notice("Done");
       } catch (e) {
-        console.error("Something went wrong", e);
+        log.error("Something went wrong", e);
       }
     });
 };

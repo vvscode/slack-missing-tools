@@ -1,4 +1,5 @@
 const sleep = require("../utils/sleep");
+const log = require("../utils/log").get("slack-page-object");
 
 class SlackPageObject {
   constructor({ browser }) {
@@ -24,7 +25,7 @@ class SlackPageObject {
   }
 
   async login({ teamName, userName, password }) {
-    console.info("Login...");
+    log.info("Login...");
 
     const url = `https://${teamName}.slack.com`;
     const sEmail = "#email";
@@ -58,7 +59,7 @@ class SlackPageObject {
   }
 
   async setResponseInterceptor({ filter, action }) {
-    console.info("setResponseInterceptor...");
+    log.info("setResponseInterceptor...");
 
     const page = await this.getPage();
     page.on("response", interceptedResponse => {
@@ -69,7 +70,7 @@ class SlackPageObject {
   }
 
   async scanAllExistingUsers() {
-    console.info("scanAllExistingUsers...");
+    log.info("scanAllExistingUsers...");
 
     const sList = ".ReactVirtualized__Grid.ReactVirtualized__List";
     const page = await this.getPage();
@@ -82,7 +83,7 @@ class SlackPageObject {
   }
 
   async jumpTo(target) {
-    console.info(`jump to ${target}`);
+    log.info(`jump to ${target}`);
 
     const sAutocomplete = '[aria-owns="c-search_autocomplete__suggestion_list"]';
     const sJumper = ".p-channel_sidebar__jumper";
@@ -98,7 +99,7 @@ class SlackPageObject {
   }
 
   async sendMessage(message) {
-    console.info(`send "${message}"`);
+    log.info(`send "${message}"`);
 
     const page = await this.getPage();
 
