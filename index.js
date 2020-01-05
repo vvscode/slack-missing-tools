@@ -13,7 +13,7 @@ program
   .requiredOption("--username <username>", "username to login in slack")
   .requiredOption("--password <password>", "password to login in slack");
 
-glob.sync("./commands/*").forEach(commandPath => {
+glob.sync(`${__dirname}/commands/*`).forEach(commandPath => {
   require(commandPath)(program);
 });
 
