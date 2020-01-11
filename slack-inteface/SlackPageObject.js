@@ -111,6 +111,37 @@ class SlackPageObject {
     // https://stackoverflow.com/questions/46442253/pressing-enter-button-in-puppeteer
     await (await page.$(sTextarea)).press("NumpadEnter");
   }
+
+  async refreshPage() {
+    log.info(`refresh`);
+
+    const page = await this.getPage();
+    return page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+  }
+
+  async scanAllGroupUsers() {
+    log.info(`send scanAllGroupUsers`);
+
+    const page = await this.getPage();
+
+    const sSidebarSwitcher = '[data-qa="channel_header__title__info"] [data-qa="model-title-info-member"]';
+    const sAllMembersButton = ".p-channel_details__members_list_buttons button";
+    await this._waitForAllElements([sSidebarSwitcher]);
+    await page.click(sSidebarSwitcher);
+
+    const allElementsButton = await page.$(sAllMembersButton);
+    if (!allElementsButton) {
+      return;
+    }
+    await page.click(sAllMembersButton);
+
+    const sList = '.p-channel_details__members_dialog__list [data-qa="slack_kit_scrollbar"]';
+    await this._waitForAllElements([sList]);
+    for (let i = 0; i < 250; i++) {
+      await page.$eval(sList, el => (el.scrollTop += 999));
+      await sleep(100);
+    }
+  }
 }
 
 module.exports = {
